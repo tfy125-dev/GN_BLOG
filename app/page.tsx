@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { MembersPanel } from "@/app/members-panel";
 
 export default function Home() {
@@ -8,6 +9,9 @@ export default function Home() {
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
           Server Actions로 members 테이블을 조회·추가·수정·삭제합니다.
         </p>
+        <Link href="/login" className="text-sm underline">
+          Google 로그인 테스트
+        </Link>
       </header>
       <MembersPanel />
     </main>
