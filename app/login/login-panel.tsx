@@ -1,4 +1,5 @@
-import { signInWithGoogle, signOut } from "@/app/auth/actions";
+import { connection } from "next/server";
+import { signOut } from "@/app/auth/actions";
 import { createClient } from "@/lib/supabase/server";
 
 export async function LoginPanel({
@@ -6,6 +7,7 @@ export async function LoginPanel({
 }: {
   searchParams: Promise<{ error?: string }>;
 }) {
+  await connection();
   const { error } = await searchParams;
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
@@ -64,14 +66,7 @@ export async function LoginPanel({
           </form>
         </div>
       ) : (
-        <form action={signInWithGoogle}>
-          <button
-            type="submit"
-            className="rounded-md bg-zinc-900 px-4 py-2 text-sm text-white dark:bg-zinc-100 dark:text-zinc-900"
-          >
-            Google로 계속하기
-          </button>
-        </form>
+        <p className="text-sm text-zinc-500">로그인되어 있지 않습니다.</p>
       )}
     </section>
   );
