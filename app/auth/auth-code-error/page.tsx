@@ -8,8 +8,8 @@ export default function AuthCodeErrorPage() {
         Google에서 돌아온 인증 코드를 세션으로 바꾸지 못했습니다. Supabase의 Redirect URL에
         이 앱의 콜백 주소가 들어 있는지 확인해 주세요.
       </p>
-      <Link href="/login" className="text-sm underline">
-        로그인 화면으로 돌아가기
+      <Link href="/" className="text-sm underline">
+        처음 화면으로 돌아가기
       </Link>
     </main>
   );

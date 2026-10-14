@@ -24,3 +24,60 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.rich-text p,
+.rich-text ul,
+.rich-text ol,
+.rich-text blockquote,
+.rich-text pre {
+  margin: 0.75rem 0;
+}
+
+.rich-text h2,
+.rich-text h3 {
+  margin: 1.25rem 0 0.5rem;
+  font-weight: 650;
+}
+
+.rich-text h2 {
+  font-size: 1.35rem;
+}
+
+.rich-text h3 {
+  font-size: 1.15rem;
+}
+
+.rich-text ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+
+.rich-text ol {
+  list-style: decimal;
+  padding-left: 1.25rem;
+}
+
+.rich-text blockquote {
+  border-left: 3px solid #d4d4d8;
+  padding-left: 0.75rem;
+  color: #52525b;
+}
+
+.rich-text a {
+  text-decoration: underline;
+}
+
+.rich-text pre {
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  background: #f4f4f5;
+  padding: 0.75rem;
+}
+
+.rich-text p.is-editor-empty:first-child::before {
+  float: left;
+  height: 0;
+  color: #a1a1aa;
+  content: attr(data-placeholder);
+  pointer-events: none;
+}

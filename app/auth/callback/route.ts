@@ -4,15 +4,23 @@ import { createClient } from "@/lib/supabase/server";
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  let next = searchParams.get("next") ?? "/login";
+  let next = searchParams.get("next") ?? "/";
   if (!next.startsWith("/")) {
-    next = "/login";
+    next = "/";
   }
 
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
+      const { data: userData } = await supabase.auth.getUser();
+      const createdAt = userData.user?.created_at;
+      if (createdAt) {
+        const ageMs = Date.now() - new Date(createdAt).getTime();
+        if (ageMs >= 0 && ageMs < 2 * 60 * 1000) {
+          next = "/?joined=1";
+        }
+      }
       const forwardedHost = request.headers.get("x-forwarded-host");
       const isLocalEnv = process.env.NODE_ENV === "development";
       if (isLocalEnv) {
