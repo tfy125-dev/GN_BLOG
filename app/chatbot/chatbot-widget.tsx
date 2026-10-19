@@ -9,7 +9,7 @@ type ChatMessage = {
 
 const welcome: ChatMessage = {
   role: "assistant",
-  text: "동네 공공서비스를 연결하는 블로그입니다. 글쓰기, 로그인, 팔로우, 댓글, 좋아요 이용 방법을 물어보세요.",
+  text: "카탄 규칙서를 기준으로 답합니다. 건설 비용, 거래, 승점, 도둑에 대해 물어보세요.",
 };
 
 export function ChatbotWidget() {
@@ -61,7 +61,7 @@ export function ChatbotWidget() {
       {open ? (
         <section className="flex h-[28rem] w-[min(22rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-lg dark:border-zinc-800 dark:bg-zinc-950">
           <header className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
-            <h2 className="text-sm font-semibold">이용 안내</h2>
+            <h2 className="text-sm font-semibold">카탄 규칙</h2>
             <button type="button" onClick={() => setOpen(false)} className="text-sm text-zinc-500 underline">
               닫기
             </button>
@@ -96,7 +96,7 @@ export function ChatbotWidget() {
               value={input}
               onChange={(event) => setInput(event.target.value)}
               maxLength={1000}
-              placeholder="이용 방법을 질문하세요"
+              placeholder="규칙을 질문하세요"
               className="min-w-0 flex-1 rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-sm dark:border-zinc-700"
             />
             <button
@@ -115,7 +115,7 @@ export function ChatbotWidget() {
         aria-expanded={open}
         className="h-14 rounded-full bg-zinc-900 px-5 text-sm font-medium text-white shadow-lg dark:bg-zinc-100 dark:text-zinc-900"
       >
-        {open ? "닫기" : "도움말"}
+        {open ? "닫기" : "규칙"}
       </button>
     </div>
   );

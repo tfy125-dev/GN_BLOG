@@ -1,5 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import { chatbotSystemInstruction } from "@/lib/chatbot/prompt";
+import { safeError, searchIndex } from "@/lib/rag/store";
 
 const MAX_MESSAGE_LENGTH = 1000;
 const MAX_HISTORY = 8;
@@ -62,13 +63,29 @@ export async function POST(request: Request) {
     { role: "user", parts: [{ text: message }] },
   ];
 
+  let systemInstruction = chatbotSystemInstruction;
+  try {
+    const hits = await searchIndex(message);
+    if (hits.length > 0) {
+      const block = hits
+        .map((hit, index) => {
+          const place = hit.page ? `${hit.path} ${hit.page}쪽` : hit.path;
+          return `${index + 1}. ${hit.title} (${place})\n${hit.text}`;
+        })
+        .join("\n\n");
+      systemInstruction = `${chatbotSystemInstruction}\n\n검색된 자료:\n${block}`;
+    }
+  } catch (error) {
+    console.error("rag", safeError(error));
+  }
+
   try {
     const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
       model,
       contents,
       config: {
-        systemInstruction: chatbotSystemInstruction,
+        systemInstruction,
         maxOutputTokens: 400,
       },
     });
